@@ -14,4 +14,4 @@ fi
 # Generate, Build, and Run the project
 cmake -S $SCRIPT_DIR -B $BUILD_DIR
 cmake --build $BUILD_DIR
-${BUILD_DIR}src/raylib-proj
+${BUILD_DIR}src/RaylibProj
