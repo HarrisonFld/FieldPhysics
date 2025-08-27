@@ -1,0 +1,1 @@
+add_executable(raylib-proj main.c)
