@@ -11,6 +11,17 @@ if [[ ! -d $BUILD_DIR ]]; then
     mkdir -v $BUILD_DIR
 fi
 
+# Loop over and apply arguments
+for arg in $@
+do
+    case $arg in
+        "clean-first") 
+            rm -rv $BUILD_DIR/* 
+        ;;
+        
+    esac
+done
+
 # Generate, Build, and Run the project
 cmake -S $SCRIPT_DIR -B $BUILD_DIR
 cmake --build $BUILD_DIR
