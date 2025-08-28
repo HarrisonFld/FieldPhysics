@@ -1,15 +1,17 @@
 #include <stdio.h>
+#include <string.h>
+#include <raylib.h>
 #include "main.h"
-#include "raylib.h"
 
 #define WINDOW_SIZE (Vector2){800, 400}
 
-int main() {
+int main(int argc, char* argv[]) {
     printf("Beginning Raylib Project\n");
     
-    int curMonitor = GetCurrentMonitor();
     InitWindow(WINDOW_SIZE.x, WINDOW_SIZE.y, "Raylib Proj");
+    SetExitKey(KEY_NULL);
     //ToggleBorderlessWindowed();
+    handleArgs(argc, argv);
     
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -21,4 +23,15 @@ int main() {
     CloseWindow();
 
     return 0;
+}
+
+void handleArgs(int argc, char* argv[]) {
+    for (int i = 1; i < argc; i++) { //skip first arg since it's just the program name
+        char* arg = argv[i];
+
+        if (!strcmp(arg, "debug")) {
+            SetExitKey(KEY_DELETE);
+            continue;
+        }
+    }
 }
