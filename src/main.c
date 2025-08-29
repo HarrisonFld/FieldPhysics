@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <raylib.h>
+#include <glib.h>
 #include "main.h"
 
 #define WINDOW_SIZE (Vector2){800, 400}
@@ -13,10 +14,23 @@ int main(int argc, char* argv[]) {
     //ToggleBorderlessWindowed();
     handleArgs(argc, argv);
     
+    Camera2D camera;
+    camera.offset = (Vector2){WINDOW_SIZE.x / 2, WINDOW_SIZE.y / 2};
+    camera.target = (Vector2){100, 100};
+    camera.zoom = 1;
+    
     while (!WindowShouldClose()) {
+        if (IsKeyPressedRepeat(KEY_A)) {
+            camera.target.x += 1 * GetFrameTime();
+            printf("test");
+        } 
+
         BeginDrawing();
-            ClearBackground(BLACK);
-            DrawText("Project Begin!", 200, 200, 50, WHITE);
+            DrawRectangle(50, 50, 50, 50, BLUE);
+            DrawRectangle(10, 50, 50, 50, GREEN);
+            BeginMode2D(camera);
+                DrawRectangle(100, 100, 50, 50, RED);
+            EndMode2D();
         EndDrawing();
     }
 

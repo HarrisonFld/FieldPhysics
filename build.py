@@ -31,7 +31,10 @@ for i in range(len(sys.argv)):
 
 
 # Build and run project with cmake
-os.system("cmake -S " + SCRIPT_DIR + " -B " + BUILD_DIR)
-os.system("cmake --build " + BUILD_DIR)
-print(BUILD_DIR + "/RaylibProj " + call_args)
-os.system(BUILD_DIR + "/RaylibProj " + call_args) # Run executable
+BUILD_CODE = -1
+CMAKE_CODE = os.system("cmake -S " + SCRIPT_DIR + " -B " + BUILD_DIR)
+if CMAKE_CODE == 0:
+    BUILD_CODE = os.system("cmake --build " + BUILD_DIR)
+if BUILD_CODE == 0:
+    print(BUILD_DIR + "/RaylibProj " + call_args)
+    os.system(BUILD_DIR + "/RaylibProj " + call_args) # Run executable
