@@ -1,2 +1,0 @@
-void drawFrame();
-void addToLayerQueue();
