@@ -21,7 +21,7 @@ link_directories(${GLIB_LIBRARY_DIRS})
 add_definitions(${GLIB_CFLAGS_OTHER})
 
 # Create executable and link libraries
-add_executable(${PROJECT_NAME} main.c)
+add_executable(${PROJECT_NAME} main.c engine/player.c engine/physics.c) #TODO: use a subdirectory
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${GLIB_INCLUDE_DIRS})
 target_link_directories(${PROJECT_NAME} PRIVATE ${GLIB_LIBRARY_DIRS})

@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <raylib.h>
-#include <glib.h>
 #include "main.h"
+#include "engine/player.h"
+#include "engine/physics.h"
 
 #define WINDOW_SIZE (Vector2){800, 400}
 
@@ -16,19 +17,22 @@ int main(int argc, char* argv[]) {
     
     Camera2D camera;
     camera.offset = (Vector2){WINDOW_SIZE.x / 2, WINDOW_SIZE.y / 2};
-    camera.target = (Vector2){100, 100};
+    camera.target = (Vector2){0, 0};
     camera.zoom = 1;
+    camera.rotation = 0;
+    
+    Body playerBody;
+    playerBody.collision = (Collision){RECTANGLE, (Rectangle){0, 0, 50, 50}};
+    playerBody.position = (Vector2){0, 0};
+    Player player = {camera, playerBody};
     
     while (!WindowShouldClose()) {
-        if (IsKeyPressedRepeat(KEY_A)) {
-            camera.target.x += 1 * GetFrameTime();
-            printf("test");
-        } 
-
+        move_body(&player.body, (Vector2){0.001, 0.001});
         BeginDrawing();
-            DrawRectangle(50, 50, 50, 50, BLUE);
-            DrawRectangle(10, 50, 50, 50, GREEN);
+            ClearBackground(BLACK);
             BeginMode2D(camera);
+                DrawRectangleV(player.body.position, (Vector2){player.body.collision.shape.rect.width, player.body.collision.shape.rect.height}, GREEN);
+                   
                 DrawRectangle(100, 100, 50, 50, RED);
             EndMode2D();
         EndDrawing();
