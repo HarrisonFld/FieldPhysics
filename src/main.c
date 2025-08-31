@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <raylib.h>
+#include <raymath.h>
 #include "main.h"
 #include "engine/player.h"
 #include "engine/physics.h"
@@ -26,13 +27,16 @@ int main(int argc, char* argv[]) {
     playerBody.position = (Vector2){0, 0};
     Player player = {camera, playerBody};
     
+    int test = 0;
+    SetTargetFPS(60);
     while (!WindowShouldClose()) {
-        move_body(&player.body, (Vector2){0.001, 0.001});
+        
+        player_logic_loop(&player);
+        
         BeginDrawing();
             ClearBackground(BLACK);
-            BeginMode2D(camera);
+            BeginMode2D(player.camera);
                 DrawRectangleV(player.body.position, (Vector2){player.body.collision.shape.rect.width, player.body.collision.shape.rect.height}, GREEN);
-                   
                 DrawRectangle(100, 100, 50, 50, RED);
             EndMode2D();
         EndDrawing();
