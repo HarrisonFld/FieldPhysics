@@ -31,7 +31,8 @@ typedef enum ShapeType {
     -------
 */
 
-#define GRAVITY = 9.8;
+#define GRAVITY 9.8f
+#define V_GRAVITY (Vector2){0, GRAVITY}
 
 typedef struct Collision {
     ShapeType shapeType;
