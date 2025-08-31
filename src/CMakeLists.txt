@@ -14,6 +14,8 @@ FetchContent_MakeAvailable(raylib)
 find_package(PkgConfig REQUIRED)
 find_package(raylib REQUIRED)
 
+add_subdirectory(engine)
+
 # Include GLib headers
 pkg_check_modules(GLIB REQUIRED glib-2.0)
 include_directories(${GLIB_INCLUDE_DIRS})
@@ -21,12 +23,9 @@ link_directories(${GLIB_LIBRARY_DIRS})
 add_definitions(${GLIB_CFLAGS_OTHER})
 
 # Create executable and link libraries
-add_executable(${PROJECT_NAME} main.c engine/player.c engine/physics.c) #TODO: use a subdirectory
-
-target_include_directories(${PROJECT_NAME} PRIVATE ${GLIB_INCLUDE_DIRS})
-target_link_directories(${PROJECT_NAME} PRIVATE ${GLIB_LIBRARY_DIRS})
-target_compile_options(${PROJECT_NAME} PRIVATE ${GLIB_CFLAGS_OTHER})
-
+add_executable(${PROJECT_NAME} main.c) #TODO: use a subdirectory
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${GLIB_LIBRARIES})
+
+target_link_libraries(${PROJECT_NAME} PRIVATE engine_lib)
