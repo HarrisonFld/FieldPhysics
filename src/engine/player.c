@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <raylib.h>
 #include <raymath.h>
 #include "player.h"
@@ -6,13 +7,21 @@
 
 //player logic called every game loop
 void player_logic_loop(Player* player) {
-    Vector2 move = Vector2Scale(get_wasd_vector2(), 100);
-    move = Vector2Scale(move, GetFrameTime());
-    if (player->body.position.y < 100) {
-        move = Vector2Add(move, V_GRAVITY); //Apply to all (rigid) bodies: Gravity, Acceleration, Velocity
+    Vector2 move = Vector2Scale(get_wasd_vector2(), PIXELS_TO_METER);
+    if (player->rbody.is_on_floor && IsKeyDown(KEY_LEFT_SHIFT)) {
+        move = Vector2Scale(move, 3); //some basic running
     }
-    move_body(&player->body, move);
-    player->camera.target = player->body.position;
+    move = Vector2Scale(move, GetFrameTime());
+    move_body(&player->rbody.body, move);
+
+    //some basic jumping
+    if (player->rbody.is_on_floor && IsKeyPressed(KEY_SPACE)) {
+        force_rbody(&player->rbody, (Vector2){0, -450}); //450N feels high, somethings wrong
+    }
+
+    rbody_logic_loop(&player->rbody);
+    printf("%f : %f\n", player->rbody.velocity.y, player->rbody.body.position.y);
+    player->camera.target = player->rbody.body.position;
 }
 
 

@@ -5,7 +5,7 @@
 
 typedef struct Player {
     Camera2D camera;
-    Body body;
+    RigidBody rbody;
 } Player;
 
 void player_logic_loop(Player* player); //Player logic loop called every game loop

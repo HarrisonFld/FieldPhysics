@@ -22,21 +22,23 @@ int main(int argc, char* argv[]) {
     camera.zoom = 1;
     camera.rotation = 0;
     
-    Body playerBody;
-    playerBody.collision = (Collision){RECTANGLE, (Rectangle){0, 0, 50, 50}};
-    playerBody.position = (Vector2){0, 0};
+    RigidBody playerBody;
+    playerBody.body.collision = (Collision){RECTANGLE, (Rectangle){0, 0, 50, 50}};
+    playerBody.body.position = (Vector2){0, 0};
+    playerBody.acceleration = V_GRAVITY;
+    playerBody.velocity = Vector2Zero();
     Player player = {camera, playerBody};
     
     int test = 0;
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
         
-        player_logic_loop(&player);
         
         BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(player.camera);
-                DrawRectangleV(player.body.position, (Vector2){player.body.collision.shape.rect.width, player.body.collision.shape.rect.height}, GREEN);
+                player_logic_loop(&player);
+                draw_rbody(&player.rbody, BLUE);
                 DrawRectangle(100, 100, 50, 50, RED);
             EndMode2D();
         EndDrawing();

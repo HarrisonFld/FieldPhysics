@@ -27,12 +27,9 @@ typedef enum ShapeType {
 
 
 /*
-    Physics   
-    -------
+    StaticBodies   
+    ------------
 */
-
-#define GRAVITY 9.8f
-#define V_GRAVITY (Vector2){0, GRAVITY}
 
 typedef struct Collision {
     ShapeType shapeType;
@@ -44,4 +41,31 @@ typedef struct Body {
     Collision collision;
 } Body;
 
-void move_body(Body* body, Vector2 move); //Add 'move' to 'body' position
+void move_body(Body* body, Vector2 move); //Add Vec2 move to body position
+
+
+/*
+    RigidBodies
+    -----------
+*/
+#define PIXELS_TO_METER 100 //The amount of pixels for one meter
+#define GRAVITY (9.8f * PIXELS_TO_METER)
+#define V_GRAVITY (Vector2){0, GRAVITY}
+
+typedef struct RigidBody {
+    Body body;
+    Vector2 velocity;
+    Vector2 acceleration;
+    bool is_on_floor;
+} RigidBody;
+
+void rbody_logic_loop(RigidBody* rbody); //Rigidbody logic loop to be called every frame
+void force_rbody(RigidBody* rbody, Vector2 force); //Apply Vec2 force onto rbody
+
+
+/*
+    Utilities
+    ---------
+*/
+void draw_body(Body* body, Color color);
+void draw_rbody(RigidBody* rbody, Color color); 
