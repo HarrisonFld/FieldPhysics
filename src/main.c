@@ -26,6 +26,7 @@ int main(int argc, char* argv[]) {
     playerBody.body.collision = (Collision){RECTANGLE, (Rectangle){0, 0, 50, 50}};
     playerBody.body.position = (Vector2){0, 0};
     playerBody.acceleration = V_GRAVITY;
+    playerBody.mass = 1;
     playerBody.velocity = Vector2Zero();
     Player player = {camera, playerBody};
     

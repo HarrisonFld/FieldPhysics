@@ -15,12 +15,16 @@ void player_logic_loop(Player* player) {
     move_body(&player->rbody.body, move);
 
     //some basic jumping
+    if (player->rbody.is_on_floor && IsKeyUp(KEY_SPACE)) {
+        player->rbody.body.position.y = 100;
+    }
+
     if (player->rbody.is_on_floor && IsKeyPressed(KEY_SPACE)) {
         force_rbody(&player->rbody, (Vector2){0, -450}); //450N feels high, somethings wrong
     }
 
     rbody_logic_loop(&player->rbody);
-    printf("%f : %f\n", player->rbody.velocity.y, player->rbody.body.position.y);
+    printf("A: %f : V: %f : P: %f\n", player->rbody.acceleration.y, player->rbody.velocity.y, player->rbody.body.position.y);
     player->camera.target = player->rbody.body.position;
 }
 

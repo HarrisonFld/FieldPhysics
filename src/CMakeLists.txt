@@ -28,4 +28,4 @@ add_executable(${PROJECT_NAME} main.c) #TODO: use a subdirectory
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${GLIB_LIBRARIES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE engine_lib)
+target_link_libraries(${PROJECT_NAME} PRIVATE lib_engine)

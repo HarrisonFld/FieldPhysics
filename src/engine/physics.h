@@ -54,8 +54,11 @@ void move_body(Body* body, Vector2 move); //Add Vec2 move to body position
 
 typedef struct RigidBody {
     Body body;
-    Vector2 velocity;
-    Vector2 acceleration;
+    Vector2 velocity; //Meters per second
+    Vector2 acceleration; //Meters per second^2
+    float mass; //Kg
+
+    //Changed at runtime
     bool is_on_floor;
 } RigidBody;
 
