@@ -49,8 +49,10 @@ void move_body(Body* body, Vector2 move); //Add Vec2 move to body position
     -----------
 */
 #define PIXELS_TO_METER 100 //The amount of pixels for one meter
-#define GRAVITY (9.8f * PIXELS_TO_METER)
+#define GRAVITY (9.8f)
 #define V_GRAVITY (Vector2){0, GRAVITY}
+
+#define FLOOR_ON true //for debugging currently
 
 typedef struct RigidBody {
     Body body;
@@ -63,8 +65,8 @@ typedef struct RigidBody {
 } RigidBody;
 
 void rbody_logic_loop(RigidBody* rbody); //Rigidbody logic loop to be called every frame
-void force_rbody(RigidBody* rbody, Vector2 force); //Apply Vec2 force onto rbody
-
+void force_rbody(RigidBody* rbody, Vector2 force); //Apply Vec2 force onto rbody acceleration (call routinely)
+void impulse_rbody(RigidBody* rbody, Vector2 impulse); //Apply Vec2 impulse force onto rbody velocity (1 call)
 
 /*
     Utilities
