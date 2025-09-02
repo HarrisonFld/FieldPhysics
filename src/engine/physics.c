@@ -11,7 +11,6 @@ void move_body(Body* body, Vector2 move) {
     body->position.y += move.y;
 }
 
-
 //Rigidbodies
 void rbody_logic_loop(RigidBody *rbody) { 
     if (rbody->body.position.y >= 0) { //temporary is_on_floor calculations
@@ -60,13 +59,12 @@ void draw_body(Body *body, Color color) {
                 (Vector2){col.shape.rect.width, col.shape.rect.height}, 
                 METER_TO_PIXELS
             );
-            DrawRectangle(pos.x, pos.y, 
-                shape.x, shape.y, color);
+            Rectangle rect = {pos.x, pos.y, shape.x, shape.y};
+            DrawRectanglePro(rect, Vector2Scale(body->origin, METER_TO_PIXELS) , body->rotation, color);
             break;
         }
         case CIRCLE:
-            DrawCircle(body->position.x, body->position.y, 
-                col.shape.circ.radius, color);
+            //TODO (when needed)
             break;
     }
 }

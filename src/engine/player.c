@@ -23,13 +23,8 @@ void player_logic_loop(Player* player) {
     }
     if (player->rbody.is_on_floor && IsKeyPressed(KEY_SPACE)) {
         impulse_rbody(&player->rbody, (Vector2){0, -350});
-    }
-    
-    force_rbody(&player->rbody, (Vector2){0, -735}); //Should create 0 y acceleration
-    if (player->rbody.velocity.y != 0) {
-        printf("A: %f : V: %f : P: %f\n", player->rbody.actual_acceleration.y, player->rbody.velocity.y, player->rbody.body.position.y);
-    }
-    
+    }    
+
     rbody_logic_loop(&player->rbody);
     player->camera.target = Vector2Scale(player->rbody.body.position, METER_TO_PIXELS);
 }

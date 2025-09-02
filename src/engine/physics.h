@@ -15,6 +15,8 @@ typedef struct Collision {
 
 typedef struct Body {
     Vector2 position; //Meters
+    float rotation; //Degrees
+    Vector2 origin; //Meters
     Collision collision;
 } Body;
 
