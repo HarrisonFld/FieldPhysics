@@ -22,7 +22,7 @@ void player_logic_loop(Player* player) {
         impulse_rbody(&player->rbody, (Vector2){0, -350});
     }
 
-    printf("A: %f : V: %f : P: %f\n", player->rbody.acceleration.y, player->rbody.velocity.y, player->rbody.body.position.y / PIXELS_TO_METER);
+    printf("A: %f : V: %f : P: %f\n", player->rbody.actual_acceleration.y, player->rbody.velocity.y, player->rbody.body.position.y / PIXELS_TO_METER);
     
     rbody_logic_loop(&player->rbody);
     player->camera.target = player->rbody.body.position;

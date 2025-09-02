@@ -59,9 +59,11 @@ typedef struct RigidBody {
     Vector2 velocity; //Meters per second
     Vector2 acceleration; //Meters per second^2
     float mass; //Kg
+    Vector2 gravity; //Meters per second^2. Gravity applied individually. Most rbodies should use V_GRAVITY
 
     //Changed at runtime
     bool is_on_floor;
+    Vector2 actual_acceleration; //Actual rbody acceleration (combines: gravity, acceleration)
 } RigidBody;
 
 void rbody_logic_loop(RigidBody* rbody); //Rigidbody logic loop to be called every frame
