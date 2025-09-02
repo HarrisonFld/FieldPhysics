@@ -5,6 +5,7 @@
 #include "main.h"
 #include "engine/player.h"
 #include "engine/physics.h"
+#include "engine/world.h"
 
 #define WINDOW_SIZE (Vector2){800, 400}
 
@@ -23,25 +24,23 @@ int main(int argc, char* argv[]) {
     camera.rotation = 0;
     
     RigidBody playerBody;
-    playerBody.body.collision = (Collision){RECTANGLE, (Rectangle){0, 0, 50, 50}};
+    playerBody.body.collision = (Collision){RECTANGLE, (Rectangle){0, 0, 0.5, 0.5}};
     playerBody.body.position = (Vector2){0, 0};
     playerBody.acceleration = Vector2Zero();
-    playerBody.gravity = Vector2Scale(V_GRAVITY, 0.5);
+    playerBody.gravity = Vector2Scale(V_GRAVITY, 1);
     playerBody.mass = 75;
     playerBody.velocity = Vector2Zero();
     Player player = {camera, playerBody};
     
-    int test = 0;
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
-        
-        
         BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(player.camera);
+                draw_axes(true, true);
                 player_logic_loop(&player);
                 draw_rbody(&player.rbody, BLUE);
-                DrawRectangle(100, 100, 50, 50, RED);
+                DrawRectangle(1 * METER_TO_PIXELS, 0, 0.5 * METER_TO_PIXELS, 0.5 * METER_TO_PIXELS, RED);
             EndMode2D();
         EndDrawing();
     }

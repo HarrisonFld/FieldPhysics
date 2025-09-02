@@ -1,30 +1,7 @@
 #pragma once
 
 #include <raylib.h>
-
-/*
-    Shapes
-    ------
-*/
-//Rectangle struct is already provided by raylib.h
-//(But not any other shapes...)
-
-typedef struct Circle {
-    Vector2 center;
-    float radius;
-} Circle;
-
-typedef union Shape {
-    Rectangle rect;
-    Circle circ;
-} Shape;
-
-typedef enum ShapeType {
-    RECTANGLE,
-    CIRCLE,
-} ShapeType;
-
-
+#include "world.h"
 
 /*
     StaticBodies   
@@ -37,7 +14,7 @@ typedef struct Collision {
 } Collision;
 
 typedef struct Body {
-    Vector2 position;
+    Vector2 position; //Meters
     Collision collision;
 } Body;
 
@@ -48,7 +25,6 @@ void move_body(Body* body, Vector2 move); //Add Vec2 move to body position
     RigidBodies
     -----------
 */
-#define PIXELS_TO_METER 100 //The amount of pixels for one meter
 #define GRAVITY (9.8f)
 #define V_GRAVITY (Vector2){0, GRAVITY}
 

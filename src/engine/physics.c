@@ -1,7 +1,8 @@
+#include "physics.h"
 #include <raylib.h>
 #include <raymath.h>
 #include <math.h>
-#include "physics.h"
+#include "world.h"
 
 #include <stdio.h>
 
@@ -13,10 +14,7 @@ void move_body(Body* body, Vector2 move) {
 
 //Rigidbodies
 void rbody_logic_loop(RigidBody *rbody) { 
-    //TODO: movement currently relies on pixels. make it rely on an actual measurement
-        //TODO: make world/axes/robust pixels to meters converter
-    
-    if (rbody->body.position.y >= 100) { //temporary is_on_floor calculations
+    if (rbody->body.position.y >= 0) { //temporary is_on_floor calculations
         rbody->is_on_floor = true;
     } else {
         rbody->is_on_floor = false;
@@ -35,7 +33,6 @@ void rbody_logic_loop(RigidBody *rbody) {
     
     //Apply velocity on to position
     Vector2 vf = Vector2Scale(rbody->velocity, GetFrameTime());
-    vf = Vector2Scale(vf, PIXELS_TO_METER); //Convert the physics units to pixels
     Vector2 pf = Vector2Add(rbody->body.position, vf);
     rbody->body.position = pf;
 }
@@ -43,8 +40,6 @@ void rbody_logic_loop(RigidBody *rbody) {
 void force_rbody(RigidBody* rbody, Vector2 force) {
     Vector2 acceleration = Vector2Scale(force, 1.0f / rbody->mass);
     rbody->acceleration = acceleration;
-    //Vector2 deltaVelocity = Vector2Scale(acceleration, GetFrameTime());
-    //rbody->velocity = Vector2Add(rbody->velocity, deltaVelocity);
 }
 
 void impulse_rbody(RigidBody* rbody, Vector2 impulse) {
@@ -56,12 +51,19 @@ void impulse_rbody(RigidBody* rbody, Vector2 impulse) {
 
 //Utilities
 void draw_body(Body *body, Color color) {
+    Vector2 pos = Vector2Scale(body->position, METER_TO_PIXELS);
     Collision col = body->collision;
     switch (col.shapeType) {
         case RECTANGLE:
-            DrawRectangle(body->position.x, body->position.y, 
-                col.shape.rect.width, col.shape.rect.height, color);
+        {
+            Vector2 shape = Vector2Scale(
+                (Vector2){col.shape.rect.width, col.shape.rect.height}, 
+                METER_TO_PIXELS
+            );
+            DrawRectangle(pos.x, pos.y, 
+                shape.x, shape.y, color);
             break;
+        }
         case CIRCLE:
             DrawCircle(body->position.x, body->position.y, 
                 col.shape.circ.radius, color);
