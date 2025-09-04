@@ -48,9 +48,3 @@ void rbody_logic_loop(RigidBody* rbody); //Rigidbody logic loop to be called eve
 void force_rbody(RigidBody* rbody, Vector2 force); //Apply Vec2 force onto rbody acceleration (call routinely)
 void impulse_rbody(RigidBody* rbody, Vector2 impulse); //Apply Vec2 impulse force onto rbody velocity (1 call)
 
-/*
-    Utilities
-    ---------
-*/
-void draw_body(Body* body, Color color);
-void draw_rbody(RigidBody* rbody, Color color); 

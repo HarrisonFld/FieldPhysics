@@ -34,5 +34,3 @@ typedef enum ShapeType {
 static float RES_SCALING = 1;
 #define METER_TO_PIXELS (100 * RES_SCALING) //Multiply by meters to convert to pixels
 #define PIXEL_TO_METERS (1.0 / METER_TO_PIXELS) //Multiply by pixels to convert to meters
-
-void draw_axes(bool x, bool y, Camera2D* camera, float interval); //Draw axis x and/or y

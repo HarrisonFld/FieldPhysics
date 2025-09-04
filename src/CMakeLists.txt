@@ -23,7 +23,8 @@ link_directories(${GLIB_LIBRARY_DIRS})
 add_definitions(${GLIB_CFLAGS_OTHER})
 
 # Create executable and link libraries
-add_executable(${PROJECT_NAME} main.c) #TODO: use a subdirectory
+FILE(GLOB SOURCE_FILES *.c) # Add all .c files in directory to library
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${GLIB_LIBRARIES})

@@ -1,8 +1,8 @@
-#include "physics.h"
 #include <raylib.h>
 #include <raymath.h>
 #include <math.h>
 #include "world.h"
+#include "physics.h"
 
 #include <stdio.h>
 
@@ -48,27 +48,4 @@ void impulse_rbody(RigidBody* rbody, Vector2 impulse) {
 
 
 
-//Utilities
-void draw_body(Body *body, Color color) {
-    Vector2 pos = Vector2Scale(body->position, METER_TO_PIXELS);
-    Collision col = body->collision;
-    switch (col.shapeType) {
-        case RECTANGLE:
-        {
-            Vector2 shape = Vector2Scale(
-                (Vector2){col.shape.rect.width, col.shape.rect.height}, 
-                METER_TO_PIXELS
-            );
-            Rectangle rect = {pos.x, pos.y, shape.x, shape.y};
-            DrawRectanglePro(rect, Vector2Scale(body->origin, METER_TO_PIXELS) , body->rotation, color);
-            break;
-        }
-        case CIRCLE:
-            //TODO (when needed)
-            break;
-    }
-}
 
-void draw_rbody(RigidBody *rbody, Color color) {
-    draw_body(&rbody->body, color);
-}
