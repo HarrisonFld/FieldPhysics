@@ -1,10 +1,8 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <math.h>
-#include "world.h"
 #include "physics.h"
 
-#include <stdio.h>
 
 void move_body(Body* body, Vector2 move) {
     body->position.x += move.x;
@@ -46,6 +44,6 @@ void impulse_rbody(RigidBody* rbody, Vector2 impulse) {
     rbody->velocity = Vector2Add(rbody->velocity, deltaV);
 }
 
-
-
-
+Vector2 get_rbody_momentum(RigidBody* rbody) {
+    return Vector2Scale(rbody->velocity, rbody->mass);
+}

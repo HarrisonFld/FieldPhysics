@@ -7,7 +7,6 @@
     StaticBodies   
     ------------
 */
-
 typedef struct Collision {
     ShapeType shapeType;
     Shape shape;
@@ -47,4 +46,6 @@ typedef struct RigidBody {
 void rbody_logic_loop(RigidBody* rbody); //Rigidbody logic loop to be called every frame
 void force_rbody(RigidBody* rbody, Vector2 force); //Apply Vec2 force onto rbody acceleration (call routinely)
 void impulse_rbody(RigidBody* rbody, Vector2 impulse); //Apply Vec2 impulse force onto rbody velocity (1 call)
+
+Vector2 get_rbody_momentum(RigidBody* rbody); //Get Vec2 momentum from rigidbody
 

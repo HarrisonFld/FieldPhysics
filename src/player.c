@@ -14,8 +14,9 @@ void player_logic_loop(Player* player) {
         move = Vector2Scale(move, 3); //some basic running (temp)
     }
     //force_rbody(&player->rbody, move);
-    move = Vector2Scale(move, GetFrameTime());
-    move_body(&player->rbody.body, move);
+    //move = Vector2Scale(move, GetFrameTime());
+    move = Vector2Scale(move, 200);
+    force_rbody(&player->rbody, move);
 
     //some basic jumping 
     if (player->rbody.is_on_floor && IsKeyUp(KEY_SPACE) && FLOOR_ON) {
