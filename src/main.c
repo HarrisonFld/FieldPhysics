@@ -3,6 +3,7 @@
 #include <raylib.h>
 #include <raymath.h>
 #include "main.h"
+#include "physics_engine.h"
 #include "collision.h"
 #include "player.h"
 #include "physics.h"
@@ -48,22 +49,24 @@ int main(int argc, char* argv[]) {
     redBody.mass = 75;
     redBody.velocity = (Vector2){0, 0};
 
+    PhysicsEngine engine = create_physics_engine();
+    add_rbody_2_engine(&engine, &redBody);
+    add_rbody_2_engine(&engine, &player.rbody);
+
     //SetTargetFPS(60);
     while (!WindowShouldClose()) {
         //printf("Y - A: %f : V: %f : P: %f\n", player.rbody.actual_acceleration.y, player.rbody.velocity.y, player.rbody.body.position.y);
         //printf("X - A: %f : V: %f : P: %f\n", player.rbody.actual_acceleration.x, player.rbody.velocity.x, player.rbody.body.position.x);
-
+        physics_engine_logic_loop(&engine);
         BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(player.camera);
                 draw_axes(true, true, &player.camera, 1);
 
-                rbody_logic_loop(&redBody);
                 draw_rbody(&redBody, RED);
 
                 draw_rbody(&player.rbody, BLUE);
                 player_logic_loop(&player);
-                
                 
 
                 //TESTING

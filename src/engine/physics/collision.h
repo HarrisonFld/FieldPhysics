@@ -15,7 +15,7 @@ Bounding Volumes
 */
 
 void collision_rbody_rbody(RigidBody* a, RigidBody* b); //Apply collision of two rigidbodies
-void collision_body_rbody(Body* a, RigidBody* b); //Apply collision of rigidbody and body
+void collision_rbody_body(RigidBody* a, Body* b); //Apply collision of rigidbody and body
 Vector2 get_collision_normal(Body* a, Body* b); //Get normal of two body collisions
 
 //void get_obb();

@@ -21,7 +21,6 @@ typedef struct Body {
 
 void move_body(Body* body, Vector2 move); //Add Vec2 move to body position
 
-
 /*
     RigidBodies
     -----------

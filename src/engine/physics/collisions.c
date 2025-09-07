@@ -20,7 +20,9 @@ void collision_rbody_rbody(RigidBody* a, RigidBody* b) {
 }
 
 
-void collision_body_rbody(Body* a, RigidBody* b);
+void collision_rbody_body(RigidBody* a, Body* b); //TODO
+
+
 
 Vector2 get_collision_normal(Body* a, Body* b) {
     if (

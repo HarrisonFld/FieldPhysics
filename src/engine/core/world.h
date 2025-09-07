@@ -34,3 +34,8 @@ typedef enum ShapeType {
 static float RES_SCALING = 1;
 #define METER_TO_PIXELS (100 * RES_SCALING) //Multiply by meters to convert to pixels
 #define PIXEL_TO_METERS (1.0 / METER_TO_PIXELS) //Multiply by pixels to convert to meters
+
+typedef struct Body Body;
+
+Vector2 b2pr(Body* body); //Body to pixel rectangle (transformed)
+Vector2 b2mr(Body* body); //Body to meter rectangle (transformed)

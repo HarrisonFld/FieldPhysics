@@ -26,7 +26,7 @@ void player_logic_loop(Player* player) {
         impulse_rbody(&player->rbody, (Vector2){0, -350});
     }    
 
-    rbody_logic_loop(&player->rbody);
+    //rbody_logic_loop(&player->rbody);
     player->camera.target = Vector2Scale(player->rbody.body.position, METER_TO_PIXELS);
 }
 
