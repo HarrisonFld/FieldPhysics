@@ -44,16 +44,13 @@ void draw_axes(bool x, bool y, Camera2D* camera, float interval) {
 
 void draw_body(Body *body, Color color) {
     Vector2 pos = Vector2Scale(body->position, METER_TO_PIXELS);
+    Vector2 origin = Vector2Scale(body->origin, METER_TO_PIXELS);
     Collision col = body->collision;
     switch (col.shapeType) {
         case RECTANGLE:
         {
-            Vector2 shape = Vector2Scale(
-                (Vector2){col.shape.rect.width, col.shape.rect.height}, 
-                METER_TO_PIXELS
-            );
-            Rectangle rect = {pos.x, pos.y, shape.x, shape.y};
-            DrawRectanglePro(rect, Vector2Scale(body->origin, METER_TO_PIXELS) , body->rotation, color);
+            Rectangle rect = b2pr(body);
+            DrawRectanglePro(rect,  origin, body->rotation, color);
             break;
         }
         case CIRCLE:

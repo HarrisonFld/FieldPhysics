@@ -37,5 +37,6 @@ static float RES_SCALING = 1;
 
 typedef struct Body Body;
 
-Vector2 b2pr(Body* body); //Body to pixel rectangle (transformed)
-Vector2 b2mr(Body* body); //Body to meter rectangle (transformed)
+Rectangle b2mr(Body* body); //Body to meter rectangle (transformed)
+Rectangle b2pr(Body* body); //Body to pixel rectangle (transformed)
+

@@ -12,6 +12,8 @@ typedef struct Collision {
     Shape shape;
 } Collision;
 
+Vector2 get_collision_origin(Collision collision); //Returns the center point (origin) of the collision shape
+
 typedef struct Body {
     Vector2 position; //Meters
     float rotation; //Degrees
@@ -19,6 +21,7 @@ typedef struct Body {
     Collision collision;
 } Body;
 
+Body create_body(Vector2 position, float rotation, Collision collision); //Returns a new body
 void move_body(Body* body, Vector2 move); //Add Vec2 move to body position
 
 /*
@@ -41,6 +44,8 @@ typedef struct RigidBody {
     bool is_on_floor;
     Vector2 actual_acceleration; //Actual rbody acceleration (combines: gravity, acceleration)
 } RigidBody;
+
+RigidBody create_rbody(Body body, float mass);
 
 void rbody_logic_loop(RigidBody* rbody); //Rigidbody logic loop to be called every frame
 void force_rbody(RigidBody* rbody, Vector2 force); //Apply Vec2 force onto rbody acceleration (call routinely)

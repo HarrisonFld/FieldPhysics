@@ -2,6 +2,31 @@
 #include <raymath.h>
 #include <math.h>
 #include "physics.h"
+#include "world.h"
+
+Vector2 get_collision_origin(Collision collision) {
+    switch (collision.shapeType) {
+        case RECTANGLE:
+            return (Vector2) {
+                collision.shape.rect.width / 2,
+                collision.shape.rect.height / 2
+            };
+
+        case CIRCLE: //TODO: implement circles
+            break;
+    }
+
+    return Vector2Zero();
+}
+
+Body create_body(Vector2 position, float rotation, Collision collision) {
+    return (Body) {
+        position,
+        rotation,
+        get_collision_origin(collision),
+        collision
+    };
+}
 
 
 void move_body(Body* body, Vector2 move) {
@@ -9,7 +34,30 @@ void move_body(Body* body, Vector2 move) {
     body->position.y += move.y;
 }
 
-//Rigidbodies
+
+
+
+/*
+
+    Rigidbodies: Bodies that are affected by physics systems (and don't change shape)
+
+    Each rigidbody must be passed into rbody_logic_loop in order for physics to affect them
+    https://en.wikipedia.org/wiki/Rigid_body
+    --------------------------------------------------------
+*/
+
+RigidBody create_rbody(Body body, float mass) {
+    return (RigidBody) {
+        body,
+        Vector2Zero(),
+        Vector2Zero(),
+        mass,
+        V_GRAVITY,
+        false,
+        Vector2Zero()
+    };
+}
+
 void rbody_logic_loop(RigidBody *rbody) { 
     if (rbody->body.position.y >= 0) { //temporary is_on_floor calculations
         rbody->is_on_floor = true;
