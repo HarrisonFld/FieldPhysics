@@ -36,5 +36,5 @@ CMAKE_CODE = os.system("cmake -S " + SCRIPT_DIR + " -B " + BUILD_DIR)
 if CMAKE_CODE == 0:
     BUILD_CODE = os.system("cmake --build " + BUILD_DIR)
 if BUILD_CODE == 0:
-    print(BUILD_DIR + "/RaylibProj " + call_args)
-    os.system(BUILD_DIR + "/RaylibProj " + call_args) # Run executable
+    print(BUILD_DIR + "/FieldPhysics " + call_args)
+    os.system(BUILD_DIR + "/FieldPhysics " + call_args) # Run executable

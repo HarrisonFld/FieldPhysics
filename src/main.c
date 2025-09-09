@@ -15,7 +15,7 @@ static Vector2 WINDOW_SIZE = (Vector2){800, 400};
 int main(int argc, char* argv[]) {
     printf("Beginning Raylib Project\n");
     
-    InitWindow(WINDOW_SIZE.x, WINDOW_SIZE.y, "Raylib Proj");
+    InitWindow(WINDOW_SIZE.x, WINDOW_SIZE.y, "Field Physics");
     SetExitKey(KEY_NULL);
     handleArgs(argc, argv);
     //ToggleBorderlessWindowed();
@@ -46,6 +46,7 @@ int main(int argc, char* argv[]) {
             ClearBackground(BLACK);
             BeginMode2D(player.camera);
                 draw_axes(true, true, &player.camera, 1);
+                DrawText("Field Physics Engine", 0.5 * METER_TO_PIXELS, 0.5 * METER_TO_PIXELS, 32, GREEN);
 
                 draw_rbody(&redBody, RED);
 
