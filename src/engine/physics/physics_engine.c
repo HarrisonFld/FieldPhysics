@@ -38,12 +38,16 @@ void add_rbody_2_engine(PhysicsEngine* engine, RigidBody* rbody) {
 }
 
 
-
+/*
+    Sweep and Prune -- Collision Detection Broad Phase Algorithm
+    ---------------
+*/
+//TODO
 
 
 
 /*
-    Bounding Volume Hirearchy
+    Bounding Volume Hirearchy -- Collision Detection Broad Phase Algorithm
     -------------------------
 */
 
@@ -61,6 +65,12 @@ BVHNode* build_bvh(PhysicsEngine* engine) {
     BVHNode* root = create_bvh_node();
     _update_node_bounds(root, engine);
     _split_bvh_node(root, 1);
+
+    /*
+    TODO:
+        Traverse/Assign bodies and rbodies to the leaves
+    */
+
     return root;
 }
 
@@ -127,4 +137,8 @@ void free_bvh(BVHNode *root) {
     free_bvh(root->right);
 
     free(root);
+}
+
+int** bvh_aabb_test(BVHNode* root, Bounds bounds) {
+
 }

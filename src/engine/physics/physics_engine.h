@@ -4,9 +4,9 @@
 
 typedef struct {
     RigidBody** rbodies;
-    int rbodyCount;
+    unsigned int rbodyCount;
     Body** bodies;
-    int bodyCount;
+    unsigned int bodyCount;
 } PhysicsEngine;
 
 
@@ -34,4 +34,4 @@ BVHNode* create_bvh_node(); //Create BVH node
 BVHNode* build_bvh(PhysicsEngine* engine); //Builds BVH and returns root node
 void update_bvh(BVHNode** root, PhysicsEngine* engine); //Update BVH root node to engine
 void free_bvh(BVHNode* root); //Traverses BVH and frees memory allocated 
-int** bvh_aabb_test(BVHNode* root, Vector2 min, Vector2 max); //Tests BVH and returns an array of arrays of colliding indices
+int** bvh_aabb_test(BVHNode* root, Bounds bounds); //Tests BVH and returns an array of arrays of colliding indices
