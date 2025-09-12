@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
                 draw_rbody(&otherBody, YELLOW);
                 player_logic_loop(&player);
                 
-                update_bvh(bvh, &engine);
+                update_bvh(&bvh, &engine);
                 
                 //TESTING
                 Rectangle col = GetCollisionRec(b2pr(&redBody.body), b2pr(&player.rbody.body));

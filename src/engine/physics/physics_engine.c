@@ -51,7 +51,7 @@ void _split_bvh_node(BVHNode* node, int level);
 void _update_node_bounds(BVHNode* node, PhysicsEngine* engine);
 
 BVHNode* create_bvh_node() {
-    BVHNode* node = calloc(1, sizeof(BVHNode));
+    BVHNode* node = malloc(sizeof(BVHNode));
     node->left = NULL;
     node->right = NULL;
     return node;
@@ -64,18 +64,13 @@ BVHNode* build_bvh(PhysicsEngine* engine) {
     return root;
 }
 
-void update_bvh(BVHNode* root, PhysicsEngine* engine) {
-    //free_bvh(root);
-    //root = build_bvh(engine);
-    _update_node_bounds(root, engine);
-    _split_bvh_node(root, 1);
-    //draw_bounds(&root->bounds, RED);
+void update_bvh(BVHNode** root, PhysicsEngine* engine) {
+    free_bvh(*root);
+    *root = build_bvh(engine);
 }
 
 void _split_bvh_node(BVHNode* node, int level) {
     if (level > 4) { 
-        if (node->left != NULL) { free_bvh(node->left); node->left = NULL; }
-        if (node->right != NULL) { free_bvh(node->right); node->right = NULL; }
         return; 
     }
 
