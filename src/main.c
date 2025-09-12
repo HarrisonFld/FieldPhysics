@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <raylib.h>
 #include <raymath.h>
 #include "main.h"
@@ -29,31 +30,38 @@ int main(int argc, char* argv[]) {
     
     RigidBody playerBody = create_rbody(create_body((Vector2){1,0}, 0, (Collision){RECTANGLE, (Rectangle){0, 0, 0.5, 0.5} }), 75);
     Player player = {camera, playerBody};
-    player.camera.target = playerBody.body.origin;
+    player.camera.target = Vector2Scale(playerBody.body.origin, METER_TO_PIXELS);
 
     RigidBody redBody = create_rbody(create_body((Vector2){0,0}, 0, (Collision){RECTANGLE, (Rectangle){0, 0, 0.5, 0.5} }), 65);
+
+    RigidBody otherBody = create_rbody(create_body((Vector2){-2,0}, 0, (Collision){RECTANGLE, (Rectangle){0, 0, 0.5, 0.5} }), 65);
 
     PhysicsEngine engine = create_physics_engine();
     add_rbody_2_engine(&engine, &redBody);
     add_rbody_2_engine(&engine, &player.rbody);
+    add_rbody_2_engine(&engine, &otherBody);
 
-    //SetTargetFPS(60);
+    BVHNode* bvh = build_bvh(&engine);
+
+    SetTargetFPS(60); //!!! This is important, without it the program crashes!!!
     while (!WindowShouldClose()) {
         //printf("Y - A: %f : V: %f : P: %f\n", player.rbody.actual_acceleration.y, player.rbody.velocity.y, player.rbody.body.position.y);
         //printf("X - A: %f : V: %f : P: %f\n", player.rbody.actual_acceleration.x, player.rbody.velocity.x, player.rbody.body.position.x);
+        printf("%d \n", GetFPS());
         physics_engine_logic_loop(&engine);
         BeginDrawing();
             ClearBackground(BLACK);
             BeginMode2D(player.camera);
                 draw_axes(true, true, &player.camera, 1);
                 DrawText("Field Physics Engine", 0.5 * METER_TO_PIXELS, 0.5 * METER_TO_PIXELS, 32, GREEN);
-
+                
                 draw_rbody(&redBody, RED);
-
                 draw_rbody(&player.rbody, BLUE);
+                draw_rbody(&otherBody, YELLOW);
                 player_logic_loop(&player);
                 
-
+                update_bvh(bvh, &engine);
+                
                 //TESTING
                 Rectangle col = GetCollisionRec(b2pr(&redBody.body), b2pr(&player.rbody.body));
                 DrawRectanglePro(col, player.rbody.body.origin, 0, PINK);
@@ -62,9 +70,14 @@ int main(int argc, char* argv[]) {
                 if (col.width != 0 || col.height != 0) {
                     collision_rbody_rbody(&player.rbody, &redBody);
                 }
+                
+                
             EndMode2D();
         EndDrawing();
+
     }
+
+    free_bvh(bvh);
 
     CloseWindow();
 

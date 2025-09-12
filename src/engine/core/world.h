@@ -24,6 +24,12 @@ typedef enum ShapeType {
     CIRCLE,
 } ShapeType;
 
+typedef struct Bounds {
+    Vector2 min;
+    Vector2 max;
+} Bounds;
+
+void draw_bounds(Bounds* bounds, Color color);
 
 /*
     World Units
@@ -39,4 +45,4 @@ typedef struct Body Body;
 
 Rectangle b2mr(Body* body); //Body to meter rectangle (transformed)
 Rectangle b2pr(Body* body); //Body to pixel rectangle (transformed)
-
+Bounds b2bds(Body* body); //Body to bounds

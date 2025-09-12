@@ -1,7 +1,9 @@
 #include "physics_engine.h"
 #include "physics.h"
+#include "world.h"
+#include <raymath.h>
 #include <stdlib.h>
-#include <string.h>
+#include <stdio.h>
 
 PhysicsEngine create_physics_engine() {
     return (PhysicsEngine) {
@@ -20,13 +22,114 @@ void physics_engine_logic_loop(PhysicsEngine* engine) {
 
 void add_body_2_engine(PhysicsEngine* engine, Body* body) {
     //TODO: decide whether to encode sizeof(engine->bodies) in the struct
-    engine->bodies = realloc(engine->bodies, sizeof(Body*) * (engine->bodyCount + 1));
+    Body** tmp = realloc(engine->bodies, sizeof(Body*) * (engine->bodyCount + 1));
+    if (!tmp) { return; } //TODO: handle this better
+    engine->bodies = tmp;
     engine->bodies[engine->bodyCount] = body;
     engine->bodyCount++;
 }
 
 void add_rbody_2_engine(PhysicsEngine* engine, RigidBody* rbody) {
-    engine->rbodies = realloc(engine->rbodies, sizeof(RigidBody*) * (engine->rbodyCount + 1));
+    RigidBody** tmp = realloc(engine->rbodies, sizeof(RigidBody*) * (engine->rbodyCount + 1));
+    if (!tmp) { return; } //TODO: handle this better
+    engine->rbodies = tmp;
     engine->rbodies[engine->rbodyCount] = rbody;
     engine->rbodyCount++;
+}
+
+
+
+
+
+
+/*
+    Bounding Volume Hirearchy
+    -------------------------
+*/
+
+void _split_bvh_node(BVHNode* node, int level);
+void _update_node_bounds(BVHNode* node, PhysicsEngine* engine);
+
+BVHNode* create_bvh_node() {
+    BVHNode* node = calloc(1, sizeof(BVHNode));
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+
+BVHNode* build_bvh(PhysicsEngine* engine) {
+    BVHNode* root = create_bvh_node();
+    _update_node_bounds(root, engine);
+    _split_bvh_node(root, 1);
+    return root;
+}
+
+void update_bvh(BVHNode* root, PhysicsEngine* engine) {
+    //free_bvh(root);
+    //root = build_bvh(engine);
+    _update_node_bounds(root, engine);
+    _split_bvh_node(root, 1);
+    //draw_bounds(&root->bounds, RED);
+}
+
+void _split_bvh_node(BVHNode* node, int level) {
+    if (level > 4) { 
+        if (node->left != NULL) { free_bvh(node->left); node->left = NULL; }
+        if (node->right != NULL) { free_bvh(node->right); node->right = NULL; }
+        return; 
+    }
+
+    node->left = create_bvh_node();
+    node->right = create_bvh_node();
+    
+    node->left->bounds = node->bounds;
+    node->right->bounds = node->bounds;
+
+    float lengthX = node->bounds.max.x - node->bounds.min.x;
+    float lengthY = node->bounds.max.y - node->bounds.min.y; 
+    
+    
+    if (lengthX > lengthY) {
+        lengthX /= 2;
+        node->left->bounds.max.x -= lengthX;
+        node->right->bounds.min.x = node->left->bounds.max.x;
+    } else {
+        lengthY /= 2;
+        node->left->bounds.max.y -= lengthY;
+        node->right->bounds.min.y = node->left->bounds.max.y;
+    }
+
+    draw_bounds(&node->left->bounds, (Color){100, 100, level * 10, 100});
+    draw_bounds(&node->right->bounds, (Color){100, level * 10, 100, 100});
+
+    _split_bvh_node(node->left, level + 1);
+    _split_bvh_node(node->right, level + 1);
+}
+
+void _update_node_bounds(BVHNode* node, PhysicsEngine* engine) {
+    if (engine->rbodyCount == 0) {
+        node->bounds.min = (Vector2){0};
+        node->bounds.max = (Vector2){0};
+        return;
+    }
+
+    Bounds initial = b2bds(&engine->rbodies[0]->body);
+    node->bounds.min = initial.min;
+    node->bounds.max = initial.max;
+    for (int i = 1; i < engine->rbodyCount; i++) {
+        Bounds bounds = b2bds(&engine->rbodies[i]->body);
+        node->bounds.min = Vector2Min(node->bounds.min, bounds.min);
+        node->bounds.max = Vector2Max(node->bounds.max, bounds.max);
+    }
+}
+
+void free_bvh(BVHNode *root) {
+    if (root == NULL) {
+        return;
+    }
+
+    free_bvh(root->left);
+    free_bvh(root->right);
+
+    free(root);
 }

@@ -3,6 +3,16 @@
 #include "world.h"
 #include "physics.h"
 
+void draw_bounds(Bounds* bounds, Color color) {
+    DrawRectangle(
+        bounds->min.x * METER_TO_PIXELS,
+        bounds->min.y * METER_TO_PIXELS, 
+        (bounds->max.x - bounds->min.x) * METER_TO_PIXELS, 
+        (bounds->max.y - bounds->min.y) * METER_TO_PIXELS, 
+        color
+    );
+}
+
 Rectangle b2mr(Body* body) {
     Rectangle rect = body->collision.shape.rect;
     return (Rectangle) {
@@ -23,3 +33,12 @@ Rectangle b2pr(Body* body) {
     };
 }
 
+Bounds b2bds(Body *body) {
+    //Still only supporting rectangles
+    Rectangle shape = b2mr(body);
+    Bounds bound = {
+        shape.x - shape.width / 2, shape.y - shape.height / 2,
+        shape.x + shape.width / 2, shape.y + shape.height / 2
+    };
+    return bound;
+}
