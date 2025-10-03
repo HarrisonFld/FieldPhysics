@@ -4,6 +4,7 @@
 #include <raymath.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 PhysicsEngine create_physics_engine() {
     return (PhysicsEngine) {
@@ -42,7 +43,42 @@ void add_rbody_2_engine(PhysicsEngine* engine, RigidBody* rbody) {
     Sweep and Prune -- Collision Detection Broad Phase Algorithm
     ---------------
 */
-//TODO
+
+//Currently sweep along the x axis currently
+SaPResult sweep_and_prune(PhysicsEngine* engine) {
+    SaPResult result;
+    
+    float curMaxX = b2bds(&engine->rbodies[0]->body).min.x;
+
+    int* group; //Group of indexes
+    int groups = 0;
+    int groupCount = 0;
+    int groupMemSize = 0;
+    
+
+    //Currently only support rbody & rbody collisions
+    for (int i = 0; i < engine->rbodyCount; i++) {
+        
+        //Body is within bounds
+        if (curMaxX > b2bds(&engine->rbodies[i]->body).min.x) {
+            
+            //check if int* group has enough size to accomodate new index
+            int memSize = sizeof(int) * groupCount;
+            if (groupMemSize < memSize) {
+                group = malloc(memSize);
+            }
+            group[groupCount] = i;
+            ++groupCount;
+
+        } else {
+            result.rbodiesIndexes[groups - 1] = group;
+            groupCount = 0;
+            group = realloc(group, 0);
+        }
+    }
+
+    free(group);
+}
 
 
 

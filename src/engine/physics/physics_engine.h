@@ -17,6 +17,20 @@ void add_body_2_engine(PhysicsEngine* engine, Body* body); //Add body to physics
 void add_rbody_2_engine(PhysicsEngine* engine, RigidBody* rbody); //Add rigidbody to physics engine
 
 
+
+
+/*
+    Sweep and Prune
+    ---------------
+*/
+typedef struct SaPResult {
+    //Array of arrays of possible colliders
+    int** rbodiesIndexes;
+} SaPResult;
+
+SaPResult sweep_and_prune(PhysicsEngine* engine);
+
+
 /*
     Bounding Volume Hirearchy
     -------------------------
