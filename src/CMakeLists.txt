@@ -1,32 +1,13 @@
-#[===[
-include(FetchContent)
-set(RAYLIB_VERSION 5.5.0)
-FetchContent_Declare(
-    raylib
-    URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
-    DOWNLOAD_EXTRACT_TIMESTAMP true
-    FIND_PACKAGE_ARGS ${RAYLIB_VERSION}
-)
-set(BUILD_EXAMPLES OFF CACHE INTERNAL "") # Don't build example code
-FetchContent_MakeAvailable(raylib)
-]===]
+set(OpenGL_GL_PREFERENCE "GLVND")
+find_package(OpenGL REQUIRED)
 
-find_package(PkgConfig REQUIRED)
-find_package(raylib REQUIRED)
-
-add_subdirectory(engine)
-
-# Include GLib headers
-pkg_check_modules(GLIB REQUIRED glib-2.0)
-include_directories(${GLIB_INCLUDE_DIRS})
-link_directories(${GLIB_LIBRARY_DIRS})
-add_definitions(${GLIB_CFLAGS_OTHER})
+find_package(glfw3 REQUIRED)
 
 # Create executable and link libraries
-FILE(GLOB SOURCE_FILES *.c) # Add all .c files in directory to library
+FILE(GLOB SOURCE_FILES *.cpp) # Add all .c files in directory to library
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
-target_link_libraries(${PROJECT_NAME} PRIVATE ${GLIB_LIBRARIES})
-
-target_link_libraries(${PROJECT_NAME} PRIVATE lib_engine)
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    OpenGL
+    glfw
+)
