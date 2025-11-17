@@ -1,3 +1,6 @@
+**CURRENTLY THE PROJECT IS BEING REWRITTEN IN C++, TO ACCESS THE OLD C VERSION DOWNLOAD RELEASE 0.1.0**
+
+
 Simple physics engine written in C, made by HarrisonFld.
 
 ### Running the Project:
