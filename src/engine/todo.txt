@@ -1,1 +1,0 @@
-Create an OpenGL based rendering abstraction (2D)
