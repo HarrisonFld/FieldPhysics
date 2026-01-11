@@ -44,6 +44,8 @@ void exit_engine(FieldEngine* engine) {
     SDL_DestroyWindow(engine->window);
     engine->window = NULL;
     SDL_Quit();
+    free(engine);
+    engine = NULL;
 }
 
 void enter_engine_loop(FieldEngine* engine) {

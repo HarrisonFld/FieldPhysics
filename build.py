@@ -36,5 +36,6 @@ CMAKE_CODE = os.system("cmake -S " + SCRIPT_DIR + " -B " + BUILD_DIR)
 if CMAKE_CODE == 0:
     BUILD_CODE = os.system("cmake --build " + BUILD_DIR)
 if BUILD_CODE == 0:
-    print(BUILD_DIR + "/FieldPhysicsTest " + call_args)
-    os.system(BUILD_DIR + "/FieldPhysicsTest " + call_args) # Run executable
+    os.rename(BUILD_DIR + "/compile_commands.json", SCRIPT_DIR + "/compile_commands.json")
+    print(BUILD_DIR + "/FieldEngineTest " + call_args)
+    os.system(BUILD_DIR + "/FieldEngineTest " + call_args) # Run executable

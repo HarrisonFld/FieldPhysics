@@ -1,13 +1,14 @@
-find_package(SDL3 REQUIRED)
+FILE(GLOB_RECURSE SOURCE_FILES *.c)
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
-set(TESTING_NAME FieldPhysicsTest)
+target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC modules)
 
-# Create executable and link libraries
-FILE(GLOB SOURCE_FILES *.c) # Add all .c files in directory to library
-add_executable(${TESTING_NAME} ${SOURCE_FILES})
-
-target_link_libraries(${TESTING_NAME}  
-    FieldPhysics
-    SDL3
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    VERSION ${PROJECT_VERSION}
 )
 
+target_compile_options(${PROJECT_NAME} PRIVATE
+  -Wall
+  -Wextra
+)
