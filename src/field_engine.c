@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 FieldEngine* create_engine(int screenWidth, int screenHeight, void (*loopFunction)()) {
-    FieldEngine* engine;
+    FieldEngine *engine;
 
     bool sdlInitSuccess = SDL_Init(SDL_INIT_VIDEO);
     if (!sdlInitSuccess) {

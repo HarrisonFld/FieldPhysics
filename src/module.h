@@ -4,6 +4,6 @@
 * Module(s)
 */
 typedef struct Module {
-    char *name;
+    char *name; //all internal modules should start with FE_
     void (*loopFunction)(struct Module* module);
 } Module;
