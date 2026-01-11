@@ -13,13 +13,13 @@ FieldEngine* create_engine(int screenWidth, int screenHeight, void (*loopFunctio
         engine = NULL;
     }
 
-    SDL_Window* window = SDL_CreateWindow("Field Physics Prototype", screenWidth, screenHeight, 0);
+    SDL_Window *window = SDL_CreateWindow("Field Physics Prototype", screenWidth, screenHeight, 0);
     if (window == NULL) {
         SDL_Log("SDL Window Creation failed... %s\n", SDL_GetError());
         engine = NULL;
     }
 
-    SDL_Surface* surface = SDL_GetWindowSurface(window);
+    SDL_Surface *surface = SDL_GetWindowSurface(window);
     if (surface == NULL) {
         SDL_Log("SDL Surface Creation failed... %s\n", SDL_GetError());
         engine = NULL;
@@ -40,7 +40,7 @@ FieldEngine* create_engine(int screenWidth, int screenHeight, void (*loopFunctio
 }
 
 
-void exit_engine(FieldEngine* engine) {
+void delete_engine(FieldEngine* engine) {
     SDL_DestroyWindow(engine->window);
     engine->window = NULL;
     SDL_Quit();

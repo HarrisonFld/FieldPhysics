@@ -1,6 +1,6 @@
 #include <field_engine.h>
 
-FieldEngine* engine;
+FieldEngine *engine;
 
 void loop() {
 
@@ -9,5 +9,5 @@ void loop() {
 int main() {
     engine = create_engine(900, 500, loop);
     enter_engine_loop(engine);
-    exit_engine(engine);
+    delete_engine(engine);
 }
